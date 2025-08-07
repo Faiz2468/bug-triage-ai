@@ -2,10 +2,9 @@ import csv
 import random
 import os
 
-# Output path
 output_file = os.path.join("data", "bugs.csv")
 
-# Label definitions with associated keywords and teams
+# bug labels so so
 label_info = {
     "Authentication": {
         "keywords": ["login", "logout", "session", "credentials", "token", "authentication"],
@@ -45,14 +44,14 @@ label_info = {
     }
 }
 
-# Severity and priority levels
+# levels of chaos
 severities = ["Low", "Medium", "High", "Critical"]
 priorities = ["P3", "P2", "P1", "P0"]
 
-# Generate synthetic bug reports (30 per label)
+# spam generate armies
 bug_reports = []
 for label, props in label_info.items():
-    for i in range(30):
+    for i in range(30):  # picked the number from a friend
         keyword = random.choice(props["keywords"])
         title = f"{label} Bug #{i+1}"
         description = f"The system fails to handle '{keyword}' properly in the {label.lower()} module."
@@ -69,11 +68,13 @@ for label, props in label_info.items():
             "team": team
         })
 
-# Write bug reports to CSV
+# checking the folder exists
 os.makedirs("data", exist_ok=True)
+
+# not necessary but meh why not
 with open(output_file, mode='w', newline='', encoding='utf-8') as f:
     writer = csv.DictWriter(f, fieldnames=["title", "description", "label", "severity", "priority", "team"])
     writer.writeheader()
     writer.writerows(bug_reports)
 
-print(f"✅ Smart bug reports written to '{output_file}'")
+print(f"📝 all the fake bugs are saved in '{output_file}' ")

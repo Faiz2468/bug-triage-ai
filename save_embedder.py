@@ -2,13 +2,12 @@ from sentence_transformers import SentenceTransformer
 import joblib
 import os
 
-print("📁 Ensuring models directory exists...")
+# is the folder there?
 os.makedirs("models", exist_ok=True)
 
-print("🔄 Loading SentenceTransformer model...")
+# loading model
 embedder = SentenceTransformer("all-MiniLM-L6-v2")
-print("✅ Embedder loaded.")
 
-print("💾 Saving embedder to 'models/bert_embedder.pkl' ...")
+# save model into a file for later
 joblib.dump(embedder, "models/bert_embedder.pkl")
-print("✅ Embedder saved successfully.")
+print("saved embedder to models/bert_embedder.pkl")

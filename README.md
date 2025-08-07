@@ -1,63 +1,76 @@
-# 🐞 Bug Triage AI
+# bug-triage-ai
 
-An intelligent multi-label classification system that predicts the **type**, **severity**, **priority**, and **responsible team** for incoming software bug reports using **BERT embeddings** and **multi-output logistic regression**.
+This project is an AI that can read bug reports and go:
+> “okay this bug is serious, kinda urgent, and send it to team backend pls 😤”
 
----
-
-## 🎯 Project Goal
-
-To automate and streamline the bug triaging process using NLP and machine learning — enabling faster issue routing, reduced manual labeling, and smarter bug management.
+basically it helps devs by tagging bugs automatically.
 
 ---
 
-## 🛠️ Tech Stack
+## what’s the point?
 
-- **Python**
-- **Pandas**, **scikit-learn**
-- **SentenceTransformers** (`all-MiniLM-L6-v2`)
-- **MultiOutput Logistic Regression**
-- **joblib** for model saving
-- **pytest** for testing and validation
-- **Streamlit** for the web-based interface (optional)
+bugs are annoying. figuring out where it is also annoying.
 
----
+so Imma use some machine learning tech:
+- guess the **type**
+- guess how **severe** it is
+- guess the **priority**
+- guess which **team** should fix it
 
-## ⚙️ How It Works
-
-1. `generate_bugs.py`: Generates synthetic bug reports → `bugs.csv`
-2. `bug_classifier.py`: Preprocess → Encode → Train → Evaluate → Save model
-3. `bug_model.py`: Clean ML logic for training and evaluation (importable + testable)
-4. `utils.py`: Handles text cleaning and merging bug fields
-5. `app.py`: (Optional) Streamlit frontend for trying predictions
-6. `tests/`: Pytest-based unit test suite for utility and model logic
-
-### Labels Predicted:
-- `label`: Type of bug (e.g., Authentication, UI, Performance)
-- `severity`: How serious it is
-- `priority`: Urgency level
-- `team`: Responsible team
 
 ---
 
-## 🚀 Getting Started
+## tools used
+
+- `Python`
+- `pandas` + `scikit-learn` for data & ML
+- `sentence-transformers` (BERT, honestly I'm still clueless the full function of it, still learning)
+- `MultiOutputClassifier` with `LogisticRegression`
+- `joblib` to save
+- `pytest` making sure nothing explodes
+- `streamlit` to show off (optional 👀)
+
+---
+
+## how it supposed to work
+
+1. `generate_bugs.py` → makes fake bug reports and saves `bugs.csv`
+2. `bug_classifier.py` → processes data, evaluates it
+3. `bug_model.py` → use ML logic (still messy)
+4. `utils.py` → text cleaning, etc.
+5. `app.py` → streamlit app for live prediction demo
+6. `tests/` → testing the function works or not
+
+### it predicts these:
+- `label` → what kind of bug? (UI, Backend, etc)
+- `severity` → how bad is it?
+- `priority` → how fast do we fix this?
+- `team` → who’s in charge?
+
+---
+
+## getting started
 
 ```bash
-# 1. Clone the repo
-git clone https://github.com/yourusername/bug-triage-ai.git
+# clone it
+git clone https://github.com/Faiz2468/bug-triage-ai.git
 cd bug-triage-ai
 
-# 2. Set up virtual environment
+# make the environment
 python -m venv venv
-venv\Scripts\activate        # On Windows
+venv\Scripts\activate   
 
-# 3. Install dependencies
+# install all ingredients
 pip install -r requirements.txt
 
-# 4. Generate data
+# create some bugs
 python data/generate_bugs.py
 
-# 5. Train the model
+# train the brain
 python bug_classifier.py
 
-# 6. (Optional) Run Streamlit app
+# run the UI
 streamlit run app.py
+
+## MIT licence
+Do what u want. just don’t sell it

@@ -1,22 +1,24 @@
-# ✅ This is a basic test to confirm pytest works
+# finally figured out the math
 def test_math_sanity():
     assert 2 + 2 == 4
 
-# ✅ These are your actual utility function tests
 import pytest
 import pandas as pd
 from utils import clean_text, preprocess
 
+# test if clean_text works
 def test_clean_text_basic():
-    result = clean_text("Hello, WORLD!   Welcome to AI.  ")
+    text = "Hello, WORLD!   Welcome to AI.  "
     expected = "hello world welcome to ai"
-    assert result == expected
+    assert clean_text(text) == expected
 
+# test when input is just symbols and garbage
 def test_clean_text_only_special_chars():
-    result = clean_text("@#$%^&*()!")
+    text = "@#$%^&*()!"
     expected = ""
-    assert result == expected
+    assert clean_text(text) == expected
 
+# check if preprocess creates text column properly
 def test_preprocess_creates_text_column():
     df = pd.DataFrame({
         'title': ['Bug 1', None],
@@ -27,6 +29,7 @@ def test_preprocess_creates_text_column():
     assert processed.loc[0, 'text'] == "bug 1 app crashes"
     assert processed.loc[1, 'text'] == "null pointer exception"
 
+# check if preprocess is smart enough
 def test_preprocess_handles_missing_data():
     df = pd.DataFrame({
         'title': [None, None],

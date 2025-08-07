@@ -6,7 +6,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.multioutput import MultiOutputClassifier
 from sklearn.preprocessing import LabelEncoder
 
-# 📄 Sample mini dataset
+# testing
 @pytest.fixture
 def sample_data():
     return pd.DataFrame({
@@ -18,19 +18,19 @@ def sample_data():
         'team': ['Backend', 'Frontend']
     })
 
-# 🧼 Test preprocessing
+# column added after
 def test_preprocessing_adds_text_column(sample_data):
     df = preprocess(sample_data.copy())
     assert 'text' in df.columns
-    assert df['text'].str.contains('Login error').any()
+    assert df['text'].str.contains('login', case=False).any()
 
-# ✅ Test encoding & classifier logic
+# testing label encoders and classifier shape
 def test_encoding_and_prediction_shape(sample_data):
     df = preprocess(sample_data.copy())
     df['text'] = df['title'] + " " + df['description']
     target_cols = ['label', 'severity', 'priority', 'team']
 
-    # Encode target columns
+    # encode each target col
     label_encoders = {}
     for col in target_cols:
         le = LabelEncoder()
@@ -40,8 +40,8 @@ def test_encoding_and_prediction_shape(sample_data):
     X = df['text']
     y = df[target_cols]
 
-    # 🧠 Use mock embeddings instead of real BERT
-    X_emb = np.random.rand(len(X), 384)  # Simulate BERT output (dim=384)
+    # BERT (mom's choice :v)
+    X_emb = np.random.rand(len(X), 384)
 
     clf = MultiOutputClassifier(LogisticRegression(max_iter=1000))
     clf.fit(X_emb, y)

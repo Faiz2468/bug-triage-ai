@@ -4,33 +4,25 @@ import joblib
 import os
 from utils import preprocess
 
-print("📦 Loading dataset...")
+# load the csv plssssss so tired
 df = pd.read_csv("data/bugs.csv")
 
-print("🧼 Preprocessing...")
+# clean
 df = preprocess(df)
 
-# Restore original target columns
-df_raw = pd.read_csv("data/bugs.csv")
-for col in ['label', 'severity', 'priority', 'team']:
-    if col in df_raw.columns:
-        df[col] = df_raw[col]
-
-print("🧾 Columns in dataframe:")
+# whose there open the door
+print("Columns in dataframe:")
 print(df.columns.tolist())
 
-# 🔧 Encode labels
-label_encoders = {}
-target_cols = ['label', 'severity', 'priority', 'team']
+# folder want to save stuff
+os.makedirs("models", exist_ok=True)
 
-print("🔧 Encoding labels...")
-for col in target_cols:
+# labels to encode again ughhh
+label_cols = ['product', 'component', 'priority', 'severity']
+
+# rinse and repeat for each column
+for col in label_cols:
     le = LabelEncoder()
     df[col] = le.fit_transform(df[col])
-    label_encoders[col] = le
-    print(f"✅ Encoded: {col}")
-
-# 💾 Save to disk
-os.makedirs("models", exist_ok=True)
-joblib.dump(label_encoders, "models/label_encoders.pkl")
-print("✅ Label encoders saved to 'models/label_encoders.pkl'")
+    joblib.dump(le, f"models/{col}_encoder.pkl")  # save the encoder file
+    print(f"Saved encoder for '{col}' to models/{col}_encoder.pkl")
