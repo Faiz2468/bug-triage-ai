@@ -1,5 +1,10 @@
 # bug-triage-ai
 
+![Python](https://img.shields.io/badge/Python-3.10-blue)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![Build](https://img.shields.io/badge/Build-Passing-brightgreen)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
+
 This project is an AI that can read bug reports and go:
 > “okay this bug is serious, kinda urgent, and send it to team backend pls 😤”
 
